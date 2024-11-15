@@ -2,9 +2,8 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
-import axios from 'axios';
-
-
+import { toast } from 'react-toastify';
+import { postCreateNewUser } from "../../../services/apiServices";
 const ModalCreateUser = (props) => {
     const { show, setShow } = props;
     const handleClose = () => {
@@ -37,31 +36,38 @@ const ModalCreateUser = (props) => {
         }
 
     }
-
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
     const handleSubmitCreateUser = async () => {
+        //validate
+        const isValidEmail = validateEmail(email);
 
+        if (!isValidEmail) {
+            toast.error('invalid email')
+            // toast.success()
+            // toast.info()
+            return;
+        }
 
-        //call apis
-        // let data = {
-        //     email: email,
-        //     password: password,
-        //     username: username,
-        //     role: role,
-        //     userImage: image,
-        // }
-        // console.log(data)
-        const FormData = require('form-data');
+        if (!password) {
+            toast.error("ivanlid password")
+            return;
+        }
+        let data = await postCreateNewUser(email, password, username, role, image);
+        console.log("component", data)
+        if (data && data.EC === 0) {
+            toast.success(data.EM);
+            handleClose();
+        }
+        if (data && data.EC !== 0) {
+            toast.error(data.EM);
+        }
 
-        const data = new FormData();
-        data.append('email', email);
-        data.append('password', password);
-        data.append('username', username);
-        data.append('role', role);
-        data.append('userImage', image);
-
-
-        let res = await axios.post('http://localhost:8081/api/v1/participant', data)
-        console.log(">>check res", res)
     }
     return (
         <>
