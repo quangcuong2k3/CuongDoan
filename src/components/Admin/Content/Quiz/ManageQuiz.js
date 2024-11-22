@@ -97,13 +97,14 @@ const ManageQuiz = (props) => {
                                 </div>
                             </fieldset>
                         </div>
+                        <div className="list-detail">
+                            <TableQuiz />
+                        </div>
                     </Accordion.Body>
                 </Accordion.Item>
 
             </Accordion>
-            <div className="list-detail">
-                <TableQuiz />
-            </div>
+
         </div>
     )
 }
