@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import './ManageQuiz.scss';
 import Select from 'react-select';
 import { postCreateNewQuiz } from '../../../../services/apiServices'
 import { toast } from 'react-toastify';
 import TableQuiz from './TableQuiz';
 import Accordion from 'react-bootstrap/Accordion';
+import QuizQA from './QuizQA';
+import AssignQuiz from './AssignQuiz';
+import './ManageQuiz.scss';
 const options = [
     { value: 'Easy', label: 'Easy' },
     { value: 'Medium', label: 'Medium' },
@@ -51,10 +53,10 @@ const ManageQuiz = (props) => {
                         <div className="add-new">
                             <fieldset className="border rounded-3 p-3">
                                 <legend className="float-none w-auto px-3">Add new Quiz:</legend>
-                                <div class="form-floating mb-3">
+                                <div className="form-floating mb-3">
                                     <input
                                         type="text"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder='your quiz name'
                                         value={name}
                                         onChange={(event) => setName(event.target.value)}
@@ -102,7 +104,18 @@ const ManageQuiz = (props) => {
                         </div>
                     </Accordion.Body>
                 </Accordion.Item>
-
+                <Accordion.Item eventKey="1">
+                    <Accordion.Header>Update Q/A quizzes</Accordion.Header>
+                    <Accordion.Body>
+                        <QuizQA />
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="2">
+                    <Accordion.Header>Assign to Users</Accordion.Header>
+                    <Accordion.Body>
+                        <AssignQuiz />
+                    </Accordion.Body>
+                </Accordion.Item>
             </Accordion>
 
         </div>

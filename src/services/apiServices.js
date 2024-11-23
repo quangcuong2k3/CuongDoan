@@ -34,7 +34,7 @@ const getUserWithPaginate = (page, limit) => {
 }
 
 const postLogin = (userEmail, userPassword) => {
-    return axios.post(`/api/v1/login`,
+    return axios.post(`api/v1/login`,
         {
             email: userEmail,
             password: userPassword,
@@ -51,21 +51,21 @@ const postLogin = (userEmail, userPassword) => {
 // }
 
 const postRegister = (email, password, username) => {
-    return axios.post(`/api/v1/register`,
+    return axios.post(`api/v1/register`,
         { email, password, username }
     );
 }
 
 const getQuizByUser = () => {
-    return axios.get('/api/v1/quiz-by-participant');
+    return axios.get('api/v1/quiz-by-participant');
 }
 
 const getDataQuiz = (id) => {
-    return axios.get(`/api/v1/questions-by-quiz?quizId=${id}`);
+    return axios.get(`api/v1/questions-by-quiz?quizId=${id}`);
 }
 
 const postSubmitQuiz = (data) => {
-    return axios.post(`/api/v1/quiz-submit`, { ...data });
+    return axios.post(`api/v1/quiz-submit`, { ...data });
 }
 
 
@@ -79,7 +79,7 @@ const postCreateNewQuiz = (description, name, difficulty, image) => {
 }
 
 const getAllQuizForAdmin = () => {
-    return axios.get(`/api/v1/quiz/all`);
+    return axios.get(`api/v1/quiz/all`);
 }
 
 
@@ -106,17 +106,34 @@ const postCreateNewQuestionForQuiz = (quiz_id, description, image) => {
 }
 const postCreateNewAnswerForQuestion = (description, correct_answer, question_id) => {
 
-    return axios.post('/api/v1/answer', {
+    return axios.post('api/v1/answer', {
         description, correct_answer, question_id
     });
 }
 
+const postAssignQuiz = (quizId, userId) => {
+
+    return axios.post('api/v1/quiz-assign-to-user', {
+        quizId, userId
+    });
+}
+
+const getQuizWithQA = (quizId) => {
+    return axios.get(`api/v1/quiz-with-qa/${quizId}`);
+
+}
+
+const postUpsertQA = (data) => {
+    return axios.post(`api/v1/quiz-upsert-qa`, { ...data });
+
+}
 export {
     postCreateNewUser, getAllUsers, putUpdateUser,
     deleteUser, getUserWithPaginate, postLogin,
     postRegister, getQuizByUser, getDataQuiz,
     postSubmitQuiz, postCreateNewQuiz,
     getAllQuizForAdmin, putUpdateQuizForAdmin,
-    deleteQuizForAdmin, postCreateNewQuestionForQuiz
-    , postCreateNewAnswerForQuestion
+    deleteQuizForAdmin, postCreateNewQuestionForQuiz,
+    postCreateNewAnswerForQuestion, postAssignQuiz,
+    getQuizWithQA, postUpsertQA
 }
